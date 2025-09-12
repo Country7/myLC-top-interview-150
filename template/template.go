@@ -19,4 +19,6 @@ func any() string {
 // ─────────────╮╰──>
 func main() {
 	fmt.Println()
+
+	fmt.Println()
 }
