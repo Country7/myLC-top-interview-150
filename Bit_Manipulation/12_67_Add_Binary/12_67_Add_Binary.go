@@ -17,10 +17,7 @@ func addBinary(a string, b string) string {
 	// перенос, который возникает при сложении (0 или 1)
 	carry := 0
 	// Максимальная длина результата — на 1 больше, чем max(len(a), len(b))
-	maxLen := len(a)
-	if len(b) > maxLen {
-		maxLen = len(b)
-	}
+	maxLen := max(len(a), len(b))
 	// Байтовый срез для формирования результата
 	result := make([]byte, maxLen+1)
 	// индекс, с которого будем заполнять результат справа налево

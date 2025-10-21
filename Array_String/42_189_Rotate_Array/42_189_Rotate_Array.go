@@ -1,8 +1,10 @@
 package main
 
 /* Задача
-
- */
+Дан целочисленный массив nums. Повернуть массив вправо на k шагов, где k — неотрицательное число.
+Input: nums = [1,2,3,4,5,6,7], k = 3
+Output: [5,6,7,1,2,3,4]
+*/
 
 import (
 	"fmt"
@@ -10,6 +12,7 @@ import (
 
 // ─────────────╮
 // Функция для поворота массива nums вправо на k шагов
+// Алгоритм эффективный (O(n) время, O(1) память), но неочевидный логически
 func rotate(nums []int, k int) {
 	n := len(nums)
 	if n == 0 || k%n == 0 {
@@ -18,7 +21,7 @@ func rotate(nums []int, k int) {
 	}
 	k = k % n // если k больше длины массива, берем остаток от деления
 	// Вспомогательная функция для реверса подмассива с индекса start до end
-	reverse := func(nums []int, start, end int) {
+	reverse := func(start, end int) {
 		for start < end {
 			nums[start], nums[end] = nums[end], nums[start]
 			start++
@@ -26,15 +29,36 @@ func rotate(nums []int, k int) {
 		}
 	}
 	// Алгоритм "три реверса":
+	// Логика (представь, что нужно “перекинуть” последние k элементов в начало)
+	// [1,2,3,4,5,6,7], k=3
+	// шаг 1: reverse(0, 6)  → [7,6,5,4,3,2,1]
+	// шаг 2: reverse(0, 2)  → [5,6,7,4,3,2,1]
+	// шаг 3: reverse(3, 6)  → [5,6,7,1,2,3,4]
 	// 1. Реверсируем весь массив
-	reverse(nums, 0, n-1)
+	reverse(0, n-1)
 	// 2. Реверсируем первые k элементов
-	reverse(nums, 0, k-1)
+	reverse(0, k-1)
 	// 3. Реверсируем оставшиеся n-k элементов
-	reverse(nums, k, n-1)
+	reverse(k, n-1)
 }
 
 // ─────────────╯
+
+// ─────────────╮
+// Функция для поворота массива nums вправо на k шагов
+// Простой и понятный алгоритм, но менее эффективный (O(n) время, O(n) память)
+func rotateEase(nums []int, k int) {
+	n := len(nums)
+	if n == 0 {
+		return
+	}
+	k = k % n
+	if k == 0 {
+		return
+	}
+	temp := append(nums[n-k:], nums[:n-k]...)
+	copy(nums, temp)
+}
 
 // ─────────────╮╰──>
 func main() {
@@ -50,4 +74,10 @@ func main() {
 	rotate(nums2, k2)
 	fmt.Println(nums2) // [3 99 -1 -100]
 	fmt.Println()
+	// Пример 1 другим вариатом функции
+	nums3 := []int{1, 2, 3, 4, 5, 6, 7}
+	k3 := 3
+	rotateEase(nums3, k3)
+	fmt.Println(nums3) // [5 6 7 1 2 3 4]
+
 }

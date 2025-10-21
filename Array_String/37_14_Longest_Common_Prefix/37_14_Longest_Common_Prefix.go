@@ -4,6 +4,9 @@ package main
 Напишите функцию для поиска самого длинного общего префикса среди строк в массиве.
 Если общего префикса нет, верните пустую строку "".  */
 
+/* В этой задаче под общим префиксом среди строк в массиве подразумевается
+самая длинная начальная часть, которая присутствует во всех строках массива.  */
+
 import (
 	"fmt"
 )
@@ -17,15 +20,18 @@ func longestCommonPrefix(strs []string) string {
 	}
 	// Берем первую строку за основу (потенциальный общий префикс)
 	prefix := strs[0]
+
 	// Проходим по всем строкам в массиве начиная со второй
 	for i := 1; i < len(strs); i++ {
 		// Если текущая строка короче prefix, нужно также подрезать префикс
-		for len(prefix) > len(strs[i]) {
-			prefix = prefix[:len(prefix)-1]
+		if len(prefix) > len(strs[i]) {
+			prefix = prefix[:len(strs[i])]
 		}
 		// Пока текущая строка не начинается с prefix,
 		// мы постепенно укорачиваем prefix на один символ с конца
-		for len(prefix) > 0 && len(strs[i]) >= len(prefix) && strs[i][:len(prefix)] != prefix {
+		// len(prefix) > 0 — остановка, если префикс пустой
+		// strs[i][:len(prefix)] != prefix — проверка: текущая строка не начинается с prefix
+		for len(prefix) > 0 && strs[i][:len(prefix)] != prefix {
 			prefix = prefix[:len(prefix)-1]
 		}
 		// Если префикс стал пустым, значит общего префикса нет
@@ -51,6 +57,6 @@ func main() {
 	fmt.Println("Output:", longestCommonPrefix(strs2)) // Ожидается ""
 	strs3 := []string{"flower", "fkow"}
 	fmt.Println("Input:", strs3)
-	fmt.Println("Output:", longestCommonPrefix(strs3)) // Ожидается ""
+	fmt.Println("Output:", longestCommonPrefix(strs3)) // Ожидается "f"
 	fmt.Println()
 }
