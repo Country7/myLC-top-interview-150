@@ -20,7 +20,7 @@ func isIsomorphic(s string, t string) bool {
 	// Используется одна карта mapping для сопоставления символов s → t.
 	// byte (alias для uint8) полностью подходит. Если бы строки могли содержать
 	// Unicode (русские буквы, эмодзи и т.п.), пришлось бы использовать rune
-	mapping := make(map[byte]int)
+	mapping := make(map[byte]byte)
 	// Карта seen проверяет, что символы t не повторяются для разных символов s.
 	seen := make(map[byte]bool)
 
@@ -32,10 +32,10 @@ func isIsomorphic(s string, t string) bool {
 		char_t := t[i] // char_t — это текущий символ строки t на той же позиции i
 
 		// Если символ s уже сопоставлен
-		if val, ok := mapping[char_s]; ok {
-			// val — получаем это значение, связанное с ключом char_s (если оно есть).
+		if mapped, ok := mapping[char_s]; ok {
+			// mapped — получаем это значение, связанное с ключом char_s (если оно есть).
 			// ok — это логическое значение (bool), которое показывает, есть ли ключ char_s в карте.
-			if val != int(char_t) { // если сопоставление отличается от текущего, возвращаем false
+			if mapped != char_t { // если сопоставление отличается от текущего, возвращаем false
 				return false
 			}
 		} else {
@@ -43,11 +43,11 @@ func isIsomorphic(s string, t string) bool {
 			if seen[char_t] {
 				return false
 			}
-			mapping[char_s] = int(char_t)
+			mapping[char_s] = char_t
 			seen[char_t] = true
 		}
 		fmt.Print("  ╰──> char_s = ", string(char_s), ",  char_t = ", string(char_t))
-		fmt.Print("   ─>    mapping[char_s - ", string(char_s), "] = ", string(byte(mapping[char_s])))
+		fmt.Print("   ─>    mapping[char_s - ", string(char_s), "] = ", string(mapping[char_s]))
 		fmt.Println(",    seen[char_t - ", string(char_t), "] =", seen[char_t])
 	}
 	return true

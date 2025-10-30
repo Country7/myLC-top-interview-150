@@ -14,15 +14,6 @@ import (
 // ─────────────╮
 // canConstruct проверяет, можно ли составить ransomNote из букв magazine
 func canConstruct(ransomNote string, magazine string) bool {
-	// Проверяем ограничения Constraints
-	if len(ransomNote) < 1 || len(ransomNote) > 100000 {
-		fmt.Println("Error: ransomNote length must be between 1 and 105")
-		return false
-	}
-	if len(magazine) < 1 || len(magazine) > 100000 {
-		fmt.Println("Error: magazine length must be between 1 and 105")
-		return false
-	}
 	// Создаем карту для подсчета количества букв в magazine
 	magCount := make(map[rune]int)
 	for _, ch := range magazine {
