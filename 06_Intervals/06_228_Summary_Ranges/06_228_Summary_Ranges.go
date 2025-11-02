@@ -11,7 +11,16 @@ package main
 0 <= nums.length <= 20
 -231 <= nums[i] <= 231 - 1
 Все значения nums уникальны.
-nums сортируется по возрастанию.  */
+nums сортируется по возрастанию.
+
+Example 1
+Input: nums = [0,1,2,4,5,7]
+Output: ["0->2","4->5","7"]
+
+Example 2
+Input: nums = [0,2,3,4,6,8,9]
+Output: ["0","2->4","6","8->9"]
+*/
 
 import (
 	"fmt"

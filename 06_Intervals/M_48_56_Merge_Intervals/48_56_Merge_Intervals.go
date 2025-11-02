@@ -21,8 +21,10 @@ func merge(intervals [][]int) [][]int {
 	sort.Slice(intervals, func(i, j int) bool {
 		return intervals[i][0] < intervals[j][0]
 	})
+
 	// 2. Создаём результирующий срез и добавляем туда первый интервал
 	result := [][]int{intervals[0]}
+
 	// 3. Перебираем все интервалы, начиная со второго
 	for i := 1; i < len(intervals); i++ {
 		// Берём последний добавленный интервал из результата
@@ -41,6 +43,7 @@ func merge(intervals [][]int) [][]int {
 			result = append(result, current)
 		}
 	}
+
 	return result
 }
 
